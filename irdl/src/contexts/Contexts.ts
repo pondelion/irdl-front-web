@@ -8,6 +8,7 @@ export type GlobalContextValue = {
   setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>,
   setSignedInUserName: React.Dispatch<React.SetStateAction<string|undefined>>,
   setAccessToken: React.Dispatch<React.SetStateAction<string|undefined>>,
+  signOut: () => void,
 };
 
 export const GlobalContext = React.createContext<GlobalContextValue>(

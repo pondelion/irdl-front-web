@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate  } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { GlobalContext } from './contexts/Contexts';
 import { darkBlueTheme, mediumBlueRedTheme } from './themes/MaterialUI';
 import SignIn from './pages/SignIn';
 import Home from './pages/Home';
+import DashBoard from './pages/DashBoard';
+import LocationView from './pages/LocationView';
+import SensorView from './pages/SensorView';
 import { userPool } from './aws/Cognito';
 
 
@@ -40,6 +43,21 @@ function App() {
     }
   }, [isSignedIn, signedInUserName, accessToken]);
 
+  const signOut = () => {
+    const cognitoUser = userPool.getCurrentUser()
+    if (cognitoUser) {
+      cognitoUser.signOut();
+      localStorage.clear();
+      console.log('signed out');
+      setIsSignedIn(false);
+      setSignedInUserName("");
+      setAccessToken("");
+    } else {
+      localStorage.clear();
+      console.log('no user signed in');
+    }
+  };
+
   return (
     <GlobalContext.Provider value={{
       isSignedIn: isSignedIn,
@@ -48,6 +66,7 @@ function App() {
       setIsSignedIn: setIsSignedIn,
       setSignedInUserName: setSignedInUserName,
       setAccessToken: setAccessToken,
+      signOut: signOut,
     }}>
       <MuiThemeProvider theme={mediumBlueRedTheme}>
         <Router basename={process.env.PUBLIC_URL}>
@@ -56,6 +75,15 @@ function App() {
           </Routes >
           <Routes >
             <Route path="/signin" element={isSignedIn ? <Navigate to="/" replace /> : <SignIn />} />
+          </Routes >
+          <Routes >
+            <Route path="/dashboard" element={isSignedIn ? <DashBoard />: <Navigate to="/signin" replace />} />
+          </Routes >
+          <Routes >
+            <Route path="/location" element={isSignedIn ? <LocationView />: <Navigate to="/signin" replace />} />
+          </Routes >
+          <Routes >
+            <Route path="/sensor" element={isSignedIn ? <SensorView />: <Navigate to="/signin" replace />} />
           </Routes >
         </Router>
       </MuiThemeProvider>
