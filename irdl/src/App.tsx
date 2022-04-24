@@ -2,13 +2,34 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { GlobalContext } from './contexts/Contexts';
-import { darkBlueTheme, mediumBlueRedTheme } from './themes/MaterialUI';
+import { darkBlueTheme, mediumBlueRedTheme, navyWhiteTheme } from './themes/MaterialUI';
 import SignIn from './pages/SignIn';
 import Home from './pages/Home';
 import DashBoard from './pages/DashBoard';
 import LocationView from './pages/LocationView';
 import SensorView from './pages/SensorView';
 import { userPool } from './aws/Cognito';
+import { ThemeProvider } from '@mui/material';
+import RemoteCommand from './pages/RemoteCommand';
+import Amplify from 'aws-amplify';
+import awsConfiguration from './aws/Config';
+import { AWSIoTProvider } from '@aws-amplify/pubsub';
+
+
+Amplify.configure({
+  Auth: {
+      identityPoolId: awsConfiguration.IDENTITY_POOL_ID, 
+      region: awsConfiguration.REGION,
+      userPoolId: awsConfiguration.USER_POOL_ID, 
+      userPoolWebClientId: awsConfiguration.CLIENT_ID, 
+  }
+});
+
+Amplify.addPluggable(new AWSIoTProvider({
+aws_pubsub_region: awsConfiguration.REGION,
+aws_pubsub_endpoint: `wss://${awsConfiguration.IOT_ENDPOINT}/mqtt`,
+clientId: awsConfiguration.IOT_THING_NAME
+}))
 
 
 function App() {
@@ -68,7 +89,7 @@ function App() {
       setAccessToken: setAccessToken,
       signOut: signOut,
     }}>
-      <MuiThemeProvider theme={mediumBlueRedTheme}>
+      <ThemeProvider theme={navyWhiteTheme}>
         <Router basename={process.env.PUBLIC_URL}>
           <Routes >
             <Route path="/" element={isSignedIn ? <Home />: <Navigate to="/signin" replace />} />
@@ -85,8 +106,11 @@ function App() {
           <Routes >
             <Route path="/sensor" element={isSignedIn ? <SensorView />: <Navigate to="/signin" replace />} />
           </Routes >
+          <Routes >
+            <Route path="/remote_control" element={isSignedIn ? <RemoteCommand />: <Navigate to="/signin" replace />} />
+          </Routes >
         </Router>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </GlobalContext.Provider>
   );
 }

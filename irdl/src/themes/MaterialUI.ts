@@ -1,7 +1,7 @@
-import {createMuiTheme} from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
 
 
-export const appTheme = createMuiTheme({
+export const appTheme = createTheme({
   palette: {
     primary: {
       light: '#757ce8',
@@ -19,7 +19,7 @@ export const appTheme = createMuiTheme({
 });
 
 
-export const darkBlueTheme = createMuiTheme({
+export const darkBlueTheme = createTheme({
   palette: {
     primary: {
       light: '#432892',
@@ -37,7 +37,7 @@ export const darkBlueTheme = createMuiTheme({
 });
 
 
-export const darkWhiteTheme = createMuiTheme({
+export const darkWhiteTheme = createTheme({
   palette: {
     primary: {
       light: '#484848',
@@ -55,7 +55,7 @@ export const darkWhiteTheme = createMuiTheme({
 });
 
 
-export const lightBlueRedTheme = createMuiTheme({
+export const lightBlueRedTheme = createTheme({
   palette: {
     primary: {
       light: '#d1d9ff',
@@ -73,7 +73,7 @@ export const lightBlueRedTheme = createMuiTheme({
 });
 
 
-export const mediumBlueRedTheme = createMuiTheme({
+export const mediumBlueRedTheme = createTheme({
   palette: {
     primary: {
       light: '#8e99f3',
@@ -91,7 +91,7 @@ export const mediumBlueRedTheme = createMuiTheme({
 });
 
 
-export const lightBlueGreenTheme = createMuiTheme({
+export const lightBlueGreenTheme = createTheme({
   palette: {
     primary: {
       light: '#d1d9ff',
@@ -103,6 +103,23 @@ export const lightBlueGreenTheme = createMuiTheme({
       light: '#d7ffd9',
       main: '#a5d6a7',
       dark: '#75a478',
+      contrastText: '#000000',
+    },
+  },
+});
+
+export const navyWhiteTheme = createTheme({
+  palette: {
+    primary: {
+      light: '#2c2c35',
+      main: '#1c1c22',
+      dark: '#141418',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#ffffff',
+      main: '#eceff1',
+      dark: '#babdbe',
       contrastText: '#000000',
     },
   },
