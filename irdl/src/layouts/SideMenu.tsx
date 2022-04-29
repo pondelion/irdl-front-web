@@ -124,6 +124,7 @@ const SideMenu: React.FC<Props> = (props: Props) => {
         <Link to={"/"} style={{ color: 'inherit',}}>Home</Link>
         <Link to={"/dashboard"} style={{ color: 'inherit',}}>Dash Board</Link>
         <Link to={"/remote_control"} style={{ color: 'inherit',}}>Remote Device Control</Link>
+        <Link to={"/location"} style={{ color: 'inherit',}}>Location View</Link>
       </PushRotateMenu>
     </div>
   )

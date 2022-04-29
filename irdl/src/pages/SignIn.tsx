@@ -1,9 +1,5 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import Container from '@material-ui/core/Container'
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import { Button, Container, Grid, Paper, TextField } from '@mui/material';
 import {
   CognitoUser,
   AuthenticationDetails
@@ -54,7 +50,7 @@ const SignIn: React.FC<Props> = (props: Props) => {
   return (
     <Container component="main" maxWidth="xs">
       <Paper elevation={3} style={{padding: "10px 50px 30px", marginTop: 50, backgroundColor: '#EEEEEE'}}>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <h1>
             Sign In
           </h1>

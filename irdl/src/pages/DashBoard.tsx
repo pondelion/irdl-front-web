@@ -3,6 +3,7 @@ import React from 'react'
 import { GlobalContext } from '../contexts/Contexts';
 import Header from '../layouts/Header';
 import SideMenu from '../layouts/SideMenu';
+import ImageGallery from '../components/widgets/ImageGallery';
 
 
 interface Props {};
@@ -26,7 +27,7 @@ const DashBoard: React.FC<Props> = (props: Props) => {
               style={{padding: "10px", margin: "0px 5px 0px 0px", height: 500, maxHeight: '100vh', overflow: 'auto'}}
               sx={{ border: 5, borderColor: 'primary.main', backgroundColor: 'primary.main' }}
             >
-              a
+              <ImageGallery />
             </Paper>
           </Grid>
           <Grid item xs={2} md={2} lg={2} >
