@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import axios from 'axios';
+//@ts-ignore
+import { Service } from 'axios-middleware';
 import { GlobalContext } from './contexts/Contexts';
 import { darkBlueTheme, mediumBlueRedTheme, navyWhiteTheme } from './themes/MaterialUI';
 import SignIn from './pages/SignIn';
@@ -36,6 +38,7 @@ function App() {
   const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
   const [signedInUserName, setSignedInUserName] = React.useState<string>();
   const [accessToken, setAccessToken] = React.useState<string>();
+  const axiosService = new Service(axios);
   console.log(isSignedIn);
   console.log(signedInUserName);
 
@@ -47,7 +50,13 @@ function App() {
       // setAccessToken(cognitoUser.getSignInUserSession()!.getAccessToken().getJwtToken());
       cognitoUser.getSession((err: any, session: any) => {
         if (session.isValid()) {
-          setAccessToken(session.accessToken.jwtToken);
+          setAccessToken(session.idToken.jwtToken);
+          axiosService.register({
+            onRequest(config: any) {
+              config.headers['Authorization'] = `Bearer ${session.idToken.jwtToken}`;
+              return config;
+            }
+          });
         } else {
           setIsSignedIn(false);
           setSignedInUserName("");
